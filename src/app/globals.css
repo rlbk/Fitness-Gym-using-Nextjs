@@ -123,3 +123,14 @@
   min-height: 100vh;
   background-image: linear-gradient(to right, #434343 0%, black 100%);
 }
+
+.cl-cardBox {
+  box-shadow: none;
+}
+
+.cl-formButtonPrimary {
+  height: 40px !important;
+  border-radius: 2px !important;
+  box-shadow: none !important;
+  background-color: black;
+}

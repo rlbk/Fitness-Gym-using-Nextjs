@@ -1,15 +1,11 @@
+import HomeNavebar from "@/components/home-navbar";
 import { Button } from "@/components/ui/button";
 import { ArrowDown } from "lucide-react";
 
 export default function Home() {
   return (
     <div className="home-parent text-white  py-10 px-20">
-      <div className="flex justify-between items-center">
-        <h1 className=" text-2xl font-bold  uppercase">Fitness.Gym</h1>
-        <Button variant={"outline"} className=" cursor-pointer">
-          Sign-in
-        </Button>
-      </div>
+      <HomeNavebar />
       <div className="flex flex-col gap-5 justify-center items-center h-[80vh]">
         <h1 className="text-6xl">
           <strong>Fitness.</strong>
