@@ -16,9 +16,11 @@ import { SignIn, SignUp } from "@clerk/nextjs";
 import { useSearchParams } from "next/navigation";
 
 const HomeNavebar = () => {
-  const [openSheet, setOpenSheet] = useState(false);
   const queryString = useSearchParams();
   const form = queryString.get("form");
+  const isOpenSheet = queryString.get("open");
+  const [openSheet, setOpenSheet] = useState(isOpenSheet === "true");
+
   return (
     <>
       <div className="flex justify-between items-center ">
