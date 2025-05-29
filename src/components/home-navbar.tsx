@@ -38,9 +38,17 @@ const HomeNavebar = () => {
           </SheetHeader>
 
           {form === "sign-up" ? (
-            <SignUp routing="hash" signInUrl="/?form=sign-in" />
+            <SignUp
+              routing="hash"
+              signInUrl="/?form=sign-in"
+              fallbackRedirectUrl={"/account"}
+            />
           ) : (
-            <SignIn routing="hash" signUpUrl="/?form=sign-up" />
+            <SignIn
+              routing="hash"
+              signUpUrl="/?form=sign-up"
+              fallbackRedirectUrl={"/account"}
+            />
           )}
         </SheetContent>
       </Sheet>
