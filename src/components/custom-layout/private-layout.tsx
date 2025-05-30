@@ -7,9 +7,10 @@ import { getCurrentUserFromSupabase } from "@/actions/users";
 import { IUser } from "@/lib/interfaces";
 import Spinner from "../sipnner";
 import Link from "next/link";
+import usersGlobalStore, { IUsersGlobalStore } from "@/store/users-store";
 
 const PrivateLayout = ({ children }: { children: React.ReactNode }) => {
-  const [user, setUser] = useState<IUser | null>(null);
+  const { setUser, user } = usersGlobalStore() as IUsersGlobalStore;
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
