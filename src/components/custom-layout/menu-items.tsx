@@ -73,7 +73,7 @@ const MenuItems = ({ user, openMenuItems, setOpenMenuItems }: IProps) => {
         <SheetHeader>
           <SheetTitle></SheetTitle>
         </SheetHeader>
-        <div className="flex flex-col gap-10 mt-20  ">
+        <div className="flex flex-col gap-10 mt-20 px-5  ">
           {menuItems.map((item) => {
             const Icon = item.icon;
             return (
@@ -84,7 +84,10 @@ const MenuItems = ({ user, openMenuItems, setOpenMenuItems }: IProps) => {
                   pathname === item.route &&
                     "bg-gray-100 border border-gray-500 "
                 )}
-                onClick={() => router.push(item.route)}
+                onClick={() => {
+                  router.push(item.route);
+                  setOpenMenuItems(false);
+                }}
               >
                 <Icon size={15} />
                 <span className="text-sm">{item.name}</span>
