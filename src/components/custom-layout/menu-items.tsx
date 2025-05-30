@@ -10,6 +10,8 @@ import { Heart, Home, List, ShieldCheck, User2 } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
+import { SignOutButton } from "@clerk/nextjs";
+import { Button } from "../ui/button";
 
 interface IProps {
   user: IUser;
@@ -94,6 +96,9 @@ const MenuItems = ({ user, openMenuItems, setOpenMenuItems }: IProps) => {
               </div>
             );
           })}
+          <SignOutButton>
+            <Button>Sign Out</Button>
+          </SignOutButton>
         </div>
       </SheetContent>
     </Sheet>
