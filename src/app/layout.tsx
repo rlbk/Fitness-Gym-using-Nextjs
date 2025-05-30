@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Montserrat } from "next/font/google";
 import "./globals.css";
+import CustomLayout from "@/components/custom-layout";
+import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
   title: "Fitness Gym",
@@ -19,7 +21,8 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={`${montserrat.className} antialiased`}>
-          {children}
+          <CustomLayout>{children}</CustomLayout>
+          <Toaster position="bottom-right" reverseOrder={false} />
         </body>
       </html>
     </ClerkProvider>
