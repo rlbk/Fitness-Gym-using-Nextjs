@@ -6,7 +6,14 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import { Heart, Home, List, ShieldCheck, User2 } from "lucide-react";
+import {
+  FolderKanban,
+  Heart,
+  Home,
+  List,
+  ShieldCheck,
+  User2,
+} from "lucide-react";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
@@ -42,6 +49,11 @@ const MenuItems = ({ user, openMenuItems, setOpenMenuItems }: IProps) => {
       name: "Home",
       icon: Home,
       route: "/account",
+    },
+    {
+      name: "Plans",
+      icon: FolderKanban,
+      route: "/account/admin/plans",
     },
     {
       name: "users",
