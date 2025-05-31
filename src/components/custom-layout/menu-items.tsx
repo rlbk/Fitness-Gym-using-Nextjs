@@ -36,11 +36,6 @@ const MenuItems = ({ user, openMenuItems, setOpenMenuItems }: IProps) => {
       icon: ShieldCheck,
       route: "/account/user/subscriptions",
     },
-    {
-      name: "Referrals",
-      icon: Heart,
-      route: "/account/user/referrals",
-    },
   ];
   const adminMenuItems = [
     {
