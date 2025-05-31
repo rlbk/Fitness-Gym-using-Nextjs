@@ -1,4 +1,6 @@
-import HomeNavebar from "@/components/home-navbar";
+import ExplorePlanButton from "@/components/home/explore-plan-button";
+import HomeNavebar from "@/components/home/home-navbar";
+import PlansList from "@/components/home/plans-list";
 import { Button } from "@/components/ui/button";
 import { ArrowDown } from "lucide-react";
 
@@ -15,12 +17,16 @@ export default function Home() {
           A perfect gym for you to get fit and healthy with the best trainers
           and equipments.
         </p>
-        <Button>Explores Plan</Button>
+        <ExplorePlanButton />
         <ArrowDown
           size={20}
           color="gray"
           className="animate-bounce cursor-pointer mt-5"
         />
+      </div>
+      <div className="" id="plans">
+        <h1 className="text-3xl text-center mt-20 font-bold">Our Plans</h1>
+        <PlansList />
       </div>
     </div>
   );

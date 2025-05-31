@@ -24,7 +24,7 @@ const PlanForm = ({ formType, initialValues }: IProps) => {
   const router = useRouter();
   const [selectedMedias, setSelectedMedias] = useState<any[]>([]);
   const [existingMediaUrls, setExistingMediaUrls] = useState<string[]>(
-    initialValues.images || []
+    initialValues?.images || []
   );
   const [loading, setLoading] = useState(false);
   const formSchema = z.object({

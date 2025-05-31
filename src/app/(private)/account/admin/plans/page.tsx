@@ -17,7 +17,7 @@ const Page = async () => {
           <Link href="/account/admin/plans/new">Add Plan</Link>
         </Button>
       </div>
-      <PlansTable plans={response.data || null} />
+      <PlansTable data={response.data || null} />
     </div>
   );
 };

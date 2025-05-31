@@ -51,6 +51,8 @@ export const editPlanById = async (id: string, payload: any) => {
 export const deletePlanById = async (id: string) => {
   try {
     const { data, error } = await supabase.from("plans").delete().match({ id });
+    if (error) throw new Error(error.message);
+    return { success: true, message: "Plan deleted successfully." };
   } catch (error: any) {
     return { success: false, message: error.message };
   }
