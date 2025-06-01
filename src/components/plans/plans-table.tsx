@@ -62,10 +62,10 @@ const PlansTable = ({ data }: IProps) => {
             plans.map((plan) => (
               <TableRow key={plan.id}>
                 <TableCell className="font-medium">{plan.name}</TableCell>
-                <TableCell>Rs {plan.monthly_price}</TableCell>
-                <TableCell>Rs {plan.quarterly_price}</TableCell>
-                <TableCell>Rs {plan.half_yearly_price}</TableCell>
-                <TableCell>Rs {plan.yearly_price}</TableCell>
+                <TableCell>$ {plan.monthly_price}</TableCell>
+                <TableCell>$ {plan.quarterly_price}</TableCell>
+                <TableCell>$ {plan.half_yearly_price}</TableCell>
+                <TableCell>$ {plan.yearly_price}</TableCell>
                 <TableCell>
                   {dayjs(plan.created_at).format("MMM DD, YYYY hh:mm A")}
                 </TableCell>

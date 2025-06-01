@@ -55,7 +55,7 @@ const PlansList = () => {
           </ul>
           <hr />
           <h3 className="text-sm font-semibold text-primary/80">
-            Starts at Rs {plan.monthly_price} / month
+            Starts at $ {plan.monthly_price} / month
           </h3>
         </div>
       ))}

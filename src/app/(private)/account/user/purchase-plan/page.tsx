@@ -122,7 +122,7 @@ const Page = () => {
                         key={payment.key}
                         value={payment.price}
                       >
-                        {payment.planName} - Rs {payment.price}
+                        {payment.planName} - $ {payment.price}
                       </option>
                     ))}
                   </select>

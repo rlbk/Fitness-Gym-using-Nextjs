@@ -1,5 +1,6 @@
 "use client";
 
+import { getStripePaymentIntent } from "@/actions/payment";
 import PageTitle from "@/components/page-title";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -7,10 +8,26 @@ import { IPlansGlobalStore, plansGlobalStore } from "@/store/plans-store";
 import dayjs from "dayjs";
 import Link from "next/link";
 import React, { useMemo, useState } from "react";
+import toast from "react-hot-toast";
+import { CheckoutProvider, Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import CheckoutForm from "@/components/checkout/checkout-form";
+import usersGlobalStore, { IUsersGlobalStore } from "@/store/users-store";
+import { createNewSubscription } from "@/actions/subscriptions";
+import { useRouter } from "next/navigation";
+
+const stripePromise = loadStripe(
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
+);
 
 const Page = () => {
+  const router = useRouter();
   const { selectedPaymentPlan } = plansGlobalStore() as IPlansGlobalStore;
+  const { user } = usersGlobalStore() as IUsersGlobalStore;
   const [startDate, setStartDate] = useState(dayjs().format("YYYY-MM-DD"));
+  const [loading, setLoading] = useState(false);
+  const [clientSecret, setClientSecret] = useState<string | null>(null);
+  const [showCheckoutForm, setShowCheckoutForm] = useState(false);
 
   const endDate = useMemo(() => {
     return dayjs(startDate)
@@ -30,6 +47,50 @@ const Page = () => {
       return <></>;
     }
   };
+
+  const paymentIntentHandler = async () => {
+    try {
+      setLoading(true);
+      const response = await getStripePaymentIntent(
+        selectedPaymentPlan.paymentPlan.price
+      );
+      if (!response.success) throw new Error(response.message);
+      setClientSecret(response.data);
+      setShowCheckoutForm(true);
+    } catch (error) {
+      console.log(error, "@paymet error");
+      toast.error("Payment failed");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const stripeElementOptions = {
+    clientSecret: clientSecret!,
+  };
+
+  const onPaymentSuccess = async (paymentId: string) => {
+    try {
+      const payload = {
+        user_id: user?.id,
+        plan_id: selectedPaymentPlan?.mainPlan?.id,
+        start_date: startDate,
+        end_date: endDate,
+        payment_id: paymentId,
+        amount: Number(selectedPaymentPlan?.paymentPlan?.price),
+        total_duration: Number(selectedPaymentPlan?.paymentPlan?.duration),
+        is_active: true,
+      };
+      const response = await createNewSubscription(payload);
+      if (!response.success) throw new Error(response.message);
+      toast.success("Congratulations! You have successfully subscribed.");
+      router.push("/account/user/subscriptions");
+    } catch (error) {
+      console.log("@Payment failed", error);
+      toast.error("An error occurred while processing your payment.");
+    }
+  };
+
   return (
     <div>
       <PageTitle title="Checkout" />
@@ -37,7 +98,10 @@ const Page = () => {
         <div className="grid grid-cols-2 mt-7">
           <div className="col-span-1 p-5 border border-gray-500 flex flex-col gap-2 rounded">
             {renderProperty("Plan Name", selectedPaymentPlan?.mainPlan?.name)}
-            {renderProperty("Amount", selectedPaymentPlan?.paymentPlan?.price)}
+            {renderProperty(
+              "Amount",
+              "$ " + selectedPaymentPlan?.paymentPlan?.price
+            )}
             {renderProperty(
               "Duration",
               selectedPaymentPlan?.paymentPlan?.duration + " days"
@@ -51,8 +115,12 @@ const Page = () => {
               />
             )}
             {startDate && renderProperty("End Date", endDate)}
-            <Button className="bg-black hover:bg-slate-800 mt-7">
-              Pay Now
+            <Button
+              disabled={loading}
+              className="bg-black hover:bg-slate-800 mt-7"
+              onClick={paymentIntentHandler}
+            >
+              {loading ? "Processing" : "Pay Now"}
             </Button>
           </div>
           <div className="col-span-1"></div>
@@ -69,6 +137,16 @@ const Page = () => {
             </Link>
           </p>
         </div>
+      )}
+
+      {showCheckoutForm && clientSecret && (
+        <Elements stripe={stripePromise} options={stripeElementOptions}>
+          <CheckoutForm
+            showCheckoutForm={showCheckoutForm}
+            setShowCheckoutForm={setShowCheckoutForm}
+            onPaymentSuccess={onPaymentSuccess}
+          />
+        </Elements>
       )}
     </div>
   );
