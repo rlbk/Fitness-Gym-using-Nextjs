@@ -37,21 +37,25 @@ const Page = () => {
         planName: "monthly",
         price: plan.monthly_price,
         key: "monthly_price",
+        duration: 30,
       },
       {
         planName: "quarterly",
         price: plan.quarterly_price,
         key: "quarterly_price",
+        duration: 90,
       },
       {
         planName: "half-yearly",
         price: plan.half_yearly_price,
         key: "half_yearly_price",
+        duration: 180,
       },
       {
         planName: "yearly",
         price: plan.yearly_price,
         key: "yearly_price",
+        duration: 365,
       },
     ];
   };
