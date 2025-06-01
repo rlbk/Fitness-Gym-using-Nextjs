@@ -1,6 +1,6 @@
 import React from "react";
 
-const Spinner = ({ parentHeight }: { parentHeight: string }) => {
+const Spinner = ({ parentHeight }: { parentHeight: number | string }) => {
   return (
     <div
       className="flex justify-center items-center"
