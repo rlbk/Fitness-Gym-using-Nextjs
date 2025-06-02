@@ -38,3 +38,20 @@ export const getCurrentUserFromSupabase = async () => {
     };
   }
 };
+
+export const getAllUsers = async () => {
+  try {
+    const { data, error } = await supabase.from("user_profiles").select("*");
+    if (error) throw new Error(error.message);
+
+    return {
+      success: true,
+      data,
+    };
+  } catch (error: any) {
+    return {
+      success: false,
+      message: error.message,
+    };
+  }
+};
