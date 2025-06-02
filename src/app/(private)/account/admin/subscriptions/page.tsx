@@ -52,7 +52,6 @@ const Page = () => {
     "Amount",
     "Payment Id",
   ];
-  console.log(subscriptions, "@subs");
   return (
     <div>
       <PageTitle title="All Subscriptions" />

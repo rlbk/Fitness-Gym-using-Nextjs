@@ -46,7 +46,6 @@ const CheckoutForm = ({
       });
 
       if (result.error) {
-        console.log(result.error.message);
         throw new Error(result.error.message);
       } else {
         onPaymentSuccess(result.paymentIntent.id);

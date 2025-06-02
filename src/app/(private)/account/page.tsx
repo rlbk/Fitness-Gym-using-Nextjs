@@ -1,5 +1,6 @@
 "use client";
 
+import AdminDashboard from "@/components/account/admin-dashboard";
 import PageTitle from "@/components/page-title";
 import { Button } from "@/components/ui/button";
 import usersGlobalStore, { IUsersGlobalStore } from "@/store/users-store";
@@ -16,7 +17,7 @@ const Page = () => {
       <p className="text-sm font-semibold">{value}</p>
     </div>
   );
-  console.log(currentSubscription, "@curs");
+  if (user?.is_admin) return <AdminDashboard />;
   return (
     <div>
       <PageTitle title={`Welcome ${user?.name}`} />
