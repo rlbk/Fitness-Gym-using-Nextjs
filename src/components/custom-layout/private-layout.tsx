@@ -8,9 +8,11 @@ import { IUser } from "@/lib/interfaces";
 import Spinner from "../sipnner";
 import Link from "next/link";
 import usersGlobalStore, { IUsersGlobalStore } from "@/store/users-store";
+import { getCurrentUserActiveSubscription } from "@/actions/subscriptions";
 
 const PrivateLayout = ({ children }: { children: React.ReactNode }) => {
-  const { setUser, user } = usersGlobalStore() as IUsersGlobalStore;
+  const { setUser, user, setCurrentSubscription, currentSubscription } =
+    usersGlobalStore() as IUsersGlobalStore;
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -19,7 +21,14 @@ const PrivateLayout = ({ children }: { children: React.ReactNode }) => {
       setLoading(true);
       const response = await getCurrentUserFromSupabase();
       if (!response.success) throw new Error(response.message);
-      else setUser(response.data);
+      else {
+        setUser(response.data);
+        const subsResponse = await getCurrentUserActiveSubscription(
+          response.data.id
+        );
+        if (subsResponse.success && subsResponse.data)
+          setCurrentSubscription(subsResponse.data);
+      }
     } catch (error: any) {
       setError(error.message);
       toast.error("An error occur while fetching user data. Please try again.");
