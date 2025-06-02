@@ -24,7 +24,7 @@ const HomeNavebar = () => {
     <>
       <div className="flex justify-between items-center ">
         <h1 className=" text-2xl font-bold  uppercase">Fitness.Gym</h1>
-        {!user?.clerk_user_id ? (
+        {user?.clerk_user_id ? (
           <Button
             variant={"outline"}
             className="text-black cursor-pointer"

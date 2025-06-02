@@ -9,6 +9,10 @@ export const createNewSubscription = async (payload: any) => {
       .from("subscriptions")
       .insert([payload]);
     if (error) throw new Error(error.message);
+    await supabase
+      .from("user_profiles")
+      .update({ is_customer: true })
+      .eq("id", payload.user_id);
     return { success: true, data };
   } catch (error: any) {
     return { success: false, message: error.message };
