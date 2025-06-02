@@ -33,6 +33,7 @@ export interface ISubscription {
   start_date: string;
   end_date: string;
   is_active: boolean;
+  user_profiles?: IUser;
   amount: number;
   total_duration: number;
   created_at: string;

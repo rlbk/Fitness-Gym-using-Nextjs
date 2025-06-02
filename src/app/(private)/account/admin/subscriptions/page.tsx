@@ -1,6 +1,9 @@
 "use client";
 
-import { getAllSubscriptionsOfUser } from "@/actions/subscriptions";
+import {
+  getAllSubscriptions,
+  getAllSubscriptionsOfUser,
+} from "@/actions/subscriptions";
 import PageTitle from "@/components/page-title";
 import Spinner from "@/components/sipnner";
 import { ISubscription } from "@/lib/interfaces";
@@ -25,7 +28,7 @@ const Page = () => {
   const getSubscriptionsData = async () => {
     try {
       setLoading(true);
-      const response = await getAllSubscriptionsOfUser(user?.id!);
+      const response = await getAllSubscriptions();
       if (!response.success) throw new Error(response.message);
       if (response?.data) setSubscriptions(response.data);
     } catch (error: any) {
@@ -42,16 +45,17 @@ const Page = () => {
   const columns = [
     "Subscription ID",
     "Purchase Date",
+    "Customer",
     "Start Date",
     "End Date",
     "Plan",
     "Amount",
     "Payment Id",
   ];
-
+  console.log(subscriptions, "@subs");
   return (
     <div>
-      <PageTitle title="Subscriptions" />
+      <PageTitle title="All Subscriptions" />
       {loading ? (
         <Spinner parentHeight={150} />
       ) : (
@@ -75,6 +79,7 @@ const Page = () => {
                   <TableCell>
                     {dayjs(subscription.created_at).format("MMM DD, YYYY")}
                   </TableCell>
+                  <TableCell>{subscription.user_profiles?.name}</TableCell>
                   <TableCell>
                     {dayjs(subscription.start_date).format("MMM DD, YYYY")}
                   </TableCell>

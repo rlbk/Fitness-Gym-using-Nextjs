@@ -39,6 +39,21 @@ export const getCurrentUserActiveSubscription = async (user_id: string) => {
   }
 };
 
+export const getAllSubscriptions = async () => {
+  try {
+    const { data, error } = await supabase
+      .from("subscriptions")
+      .select("*, plans(*), user_profiles(*)")
+      .eq("is_active", true)
+      .order("created_at", { ascending: false });
+
+    if (error) throw new Error(error.message);
+
+    return { success: true, data };
+  } catch (error: any) {
+    return { success: false, message: error.message };
+  }
+};
 export const getAllSubscriptionsOfUser = async (user_id: string) => {
   try {
     const { data, error } = await supabase
